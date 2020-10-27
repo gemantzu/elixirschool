@@ -7,14 +7,17 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
+  jekyll_build:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-    - uses: helaili/jekyll-action@2.0.1
-    - name: Install dependencies
-      run: bundle install
+    - uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+            ${{ runner.os }}-gems-
     - name: Build project
       run: bundle exec jekyll build
