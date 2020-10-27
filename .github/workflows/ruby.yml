@@ -18,6 +18,6 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gems-
     - name: Get dependencies
-        run: bundle install
+      run: bundle install
     - name: Build project
       run: bundle exec jekyll build
