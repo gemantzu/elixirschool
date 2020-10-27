@@ -1,8 +1,6 @@
 name: Ruby
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -13,11 +11,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/cache@v1
+    - uses: actions/cache@v2
       with:
         path: vendor/bundle
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
-            ${{ runner.os }}-gems-
+          ${{ runner.os }}-gems-
+    - name: Get dependencies
+        run: bundle install
     - name: Build project
       run: bundle exec jekyll build
